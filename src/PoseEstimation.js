@@ -38,8 +38,11 @@ export async function readyTf(videoHeight, videoWidth) {
 
 
 // Draw pose image
-export async function drawPose(detector, poseFrame, width, height) {
-  // console.log(poseFrame, width, height)
+export async function drawPose(detector, currentFrame, width, height) {
+
+  // POSE ESTIMATION
+  const pose = await detector.estimatePoses(currentFrame);
+  console.log("pose", pose)
 
 
   // Create and setup canvas to draw pose on
@@ -49,8 +52,8 @@ export async function drawPose(detector, poseFrame, width, height) {
 
 
   // Image to return to app.js as 
-  var pose = new Image();
-  return pose;
+  var poseImage = new Image();
+  return poseImage;
 }
 
   

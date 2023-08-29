@@ -48,7 +48,7 @@ function App() {
       canvas.height = frameBitmap.height;
       const context = canvas.getContext('2d');
       context.drawImage(frameBitmap, 0, 0);
-      const imageData = canvas.toDataURL('image/png');
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
       currentFrame.current = imageData;
       // console.log("currentFrame.current", currentFrame.current)
       // For some reason can't add width and length properties to currentFrame.current w/o causing video issues
