@@ -10,7 +10,7 @@ function App() {
 
   // Handle user uploading video source
   const [videoSourceURL, setVideoSourceURL] = useState(null);
-  async function handleVideoUpload(event) {
+  function handleVideoUpload(event) {
     const file = event.target.files[0];
     const videoObjectUrl = URL.createObjectURL(file);
     setVideoSourceURL(videoObjectUrl);
@@ -19,11 +19,16 @@ function App() {
   // Variable to hold current frame image
   const currentFrame = useRef(null);
 
+  // Get any metadata you need
+  function getVideoMetadata(event) {
+    const { videoWidth, videoHeight } = event.target;
+    console.log(videoWidth, videoHeight)
+  }
+
 
   // Add timeupdate event listeners to video to update currentFrame variable
-  const handleTimeUpdate = (event) => {
-    const { currentTime } = event.target;
-  };
+  function captureFrame() {
+  }
 
   // Variable to hold current frame with pose estimation drawn on
 
@@ -63,6 +68,9 @@ function App() {
           style={{ width: "300px" }}
           controls
           muted
+          onLoadedMetadata={getVideoMetadata}
+          onTimeUpdate={captureFrame}
+          // ref={videoRef}
         ></video>
       )}
 
