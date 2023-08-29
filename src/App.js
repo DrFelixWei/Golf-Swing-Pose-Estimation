@@ -16,18 +16,32 @@ function App() {
     setVideoSourceURL(videoObjectUrl);
   }
 
-  // Variable to hold current frame image
-  const currentFrame = useRef(null);
-
   // Get any metadata you need
   function getVideoMetadata(event) {
     const { videoWidth, videoHeight } = event.target;
-    console.log(videoWidth, videoHeight)
   }
 
+  // Variable to hold current frame image
+  const currentFrame = useRef(null);
 
-  // Add timeupdate event listeners to video to update currentFrame variable
-  function captureFrame() {
+  // Using timeupdate event listeners on video to capture and update currentFrame variable
+  // current rate ~3 fps 
+  const videoRef = useRef(null);
+  async function captureFrame() {
+    const video = videoRef.current;
+    try {
+      const frameBitmap = await createImageBitmap(video);
+      const canvas = document.createElement('canvas');
+      canvas.width = frameBitmap.width;
+      canvas.height = frameBitmap.height;
+      const context = canvas.getContext('2d');
+      context.drawImage(frameBitmap, 0, 0);
+      const imageData = canvas.toDataURL('image/png');
+      currentFrame.current = imageData;
+      console.log("currentFrame.current", currentFrame.current)
+    } catch (error) {
+      console.error('Error capturing frame:', error);
+    }
   }
 
   // Variable to hold current frame with pose estimation drawn on
@@ -70,7 +84,7 @@ function App() {
           muted
           onLoadedMetadata={getVideoMetadata}
           onTimeUpdate={captureFrame}
-          // ref={videoRef}
+          ref={videoRef}
         ></video>
       )}
 
