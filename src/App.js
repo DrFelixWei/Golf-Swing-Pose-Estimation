@@ -1,3 +1,4 @@
+import './App.css';
 import React, { useState, useEffect, useRef } from 'react';
 
 import '@tensorflow/tfjs-backend-webgl';
@@ -8,13 +9,21 @@ import * as tf from '@tensorflow/tfjs-core';
 function App() {
 
   // Handle user uploading video source
-
+  const [videoSourceURL, setVideoSourceURL] = useState(null);
+  async function handleVideoUpload(event) {
+    const file = event.target.files[0];
+    const videoObjectUrl = URL.createObjectURL(file);
+    setVideoSourceURL(videoObjectUrl);
+  }
 
   // Variable to hold current frame image
+  const currentFrame = useRef(null);
 
 
   // Add timeupdate event listeners to video to update currentFrame variable
-
+  const handleTimeUpdate = (event) => {
+    const { currentTime } = event.target;
+  };
 
   // Variable to hold current frame with pose estimation drawn on
 
@@ -45,8 +54,17 @@ function App() {
     <div>
 
       {/* Button for user to upload video */}
+      <input type="file" accept="video/*" onChange={handleVideoUpload} />
 
-      {/* Display video controls with no visible video */}
+
+      {videoSourceURL && (
+        <video
+          src={videoSourceURL}
+          style={{ width: "300px" }}
+          controls
+          muted
+        ></video>
+      )}
 
 
 
