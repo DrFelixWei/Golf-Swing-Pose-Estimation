@@ -18,6 +18,8 @@ export function drawKeypoint(context, name, x, y, z) {
 
 export function drawLine(context, keypoint1, keypoint2) {
 
+  console.log("keypoint1", keypoint1)
+
   var startX = keypoint1.x;
   var startY = keypoint1.y;
   var endX = keypoint2.x;

@@ -56,6 +56,9 @@ export async function drawPose(detector, currentFrame, width, height) {
       drawKeypoint(context, keypoint.name, keypoint.x, keypoint.y, keypoint.z)
     });
   }); 
+  // Have to do a seperate calculation for head 
+    // add later if can get ears. currently could do eye to eye for forehead but not really aligned
+
 
   // Connect keypoints to draw skeleton pose
   if (pose.length !== 0) {
@@ -72,17 +75,26 @@ export async function drawPose(detector, currentFrame, width, height) {
 
 
     // neck spine
-    drawLine(context, 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_index")
-      )    
+      // add later if do head
       
     // back spine
-    drawLine(context, 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_index")
-      )   
-
+      // create keypoint center shoulders
+      let center_shoulders_x = (pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").x + 
+            pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").x) / 2
+      let center_shoulders_y = (pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").y + 
+            pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").y) / 2
+      let center_shoulders_z = (pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").z + 
+            pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").z) / 2
+      let keypoint_center_shoulders = { name: "center_shoulders", x: center_shoulders_x, y: center_shoulders_y , z: center_shoulders_z}
+      // create keypoint center hips
+      let center_hips_x = (pose[0].keypoints.find(keypoint => keypoint.name === "left_hip").x + 
+            pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").x) / 2
+      let center_hips_y = (pose[0].keypoints.find(keypoint => keypoint.name === "left_hip").y + 
+            pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").y) / 2
+      let center_hips_z = (pose[0].keypoints.find(keypoint => keypoint.name === "left_hip").z + 
+            pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").z) / 2
+      let keypoint_center_hips = { name: "center_hips", x: center_hips_x, y: center_hips_y , z: center_hips_z}
+    drawLine(context, keypoint_center_shoulders, keypoint_center_hips)   
 
     // upper arm left
     drawLine(context, 
