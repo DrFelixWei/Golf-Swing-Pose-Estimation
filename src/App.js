@@ -18,12 +18,18 @@ function App() {
     setVideoSourceURL(videoObjectUrl);
   }
 
-  // Get any metadata you need
+  // Get video metadata needed to ready and warmup tensorflow model
   const videoWidth = useRef(0);
   const videoHeight = useRef(0);
-  function getVideoMetadata(event) {
+  const [tfReady, setTfReady] = useState(false);
+  async function getVideoMetadata(event) {
     videoWidth.current = event.target.videoWidth;
     videoHeight.current = event.target.videoHeight;
+
+    // Ready and warmup model
+    setTfReady(false);
+    let tfIsReady = await readyTf(videoWidth.current, videoHeight.current);
+    setTfReady(tfIsReady);
   }
 
   // Variable to hold current frame image
@@ -57,16 +63,12 @@ function App() {
   const poseInProgress = useRef(false);
 
 
+
   // POSE ESTIMATION
   async function getPose() {
   
-    // Setup model
-    readyTf(videoWidth.current, videoHeight.current)
-
-
-
     // Set pose estimation in progress variable to true
-
+    poseInProgress.current = true;
 
 
     // Draw and update variable to hold current frame with pose estimation drawn on
@@ -74,6 +76,7 @@ function App() {
 
 
     // Set pose estimation in progress variable to false
+    poseInProgress.current = false;
   }
 
 
@@ -89,7 +92,7 @@ function App() {
       <input type="file" accept="video/*" onChange={handleVideoUpload} />
 
       {/* Button to start pose estimation */}
-      {videoSourceURL && (
+      {tfReady && (
         <button onClick={getPose}>Get Pose</button>
       )}
 

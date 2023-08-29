@@ -31,8 +31,20 @@ export async function readyTf(videoHeight, videoWidth) {
   // Dispose of the warm-up tensor
   warmUpTensor.dispose();
   console.log("TF READY and WARMED UP!");
+
+  // Return true to update ready status back on app.js
+  return true;
 }
 
+
+// Draw pose image
+export async function drawPose() {
+  
+
+
+
+
+}
 
   
 
