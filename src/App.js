@@ -5,6 +5,8 @@ import '@tensorflow/tfjs-backend-webgl';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import * as tf from '@tensorflow/tfjs-core';
 
+import { readyTf } from './PoseEstimation';
+
 
 function App() {
 
@@ -17,17 +19,21 @@ function App() {
   }
 
   // Get any metadata you need
+  const videoWidth = useRef(0);
+  const videoHeight = useRef(0);
   function getVideoMetadata(event) {
-    const { videoWidth, videoHeight } = event.target;
+    videoWidth.current = event.target.videoWidth;
+    videoHeight.current = event.target.videoHeight;
   }
 
   // Variable to hold current frame image
   const currentFrame = useRef(null);
 
   // Using timeupdate event listeners on video to capture and update currentFrame variable
-  // current rate ~3 fps 
+  // current rate ~4 fps 
   const videoRef = useRef(null);
   async function captureFrame() {
+    console.log("captureFrame started!")
     const video = videoRef.current;
     try {
       const frameBitmap = await createImageBitmap(video);
@@ -38,20 +44,27 @@ function App() {
       context.drawImage(frameBitmap, 0, 0);
       const imageData = canvas.toDataURL('image/png');
       currentFrame.current = imageData;
-      console.log("currentFrame.current", currentFrame.current)
+      // console.log("currentFrame.current", currentFrame.current)
     } catch (error) {
       console.error('Error capturing frame:', error);
     }
   }
 
   // Variable to hold current frame with pose estimation drawn on
-
-
+  const poseFrame = useRef(null);
 
   // Variable to hold if currently pose estimation in progress already
+  const poseInProgress = useRef(false);
 
 
   // POSE ESTIMATION
+  async function getPose() {
+  
+    // Setup model
+    readyTf(videoWidth.current, videoHeight.current)
+
+
+
     // Set pose estimation in progress variable to true
 
 
@@ -61,7 +74,7 @@ function App() {
 
 
     // Set pose estimation in progress variable to false
-
+  }
 
 
   // Add event listener / trigger for whenever currentFrameWithPose is updated and is not null to display it on canvas
@@ -75,7 +88,13 @@ function App() {
       {/* Button for user to upload video */}
       <input type="file" accept="video/*" onChange={handleVideoUpload} />
 
+      {/* Button to start pose estimation */}
+      {videoSourceURL && (
+        <button onClick={getPose}>Get Pose</button>
+      )}
 
+
+      {/* Video display */}
       {videoSourceURL && (
         <video
           src={videoSourceURL}
