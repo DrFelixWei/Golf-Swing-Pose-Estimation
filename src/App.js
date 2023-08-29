@@ -5,7 +5,7 @@ import '@tensorflow/tfjs-backend-webgl';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import * as tf from '@tensorflow/tfjs-core';
 
-import { readyTf } from './PoseEstimation';
+import { readyTf, drawPose } from './PoseEstimation';
 
 
 function App() {
@@ -18,18 +18,18 @@ function App() {
     setVideoSourceURL(videoObjectUrl);
   }
 
+  // Variable to hold tensorflow model
+  const detector = useRef(null);
+
   // Get video metadata needed to ready and warmup tensorflow model
   const videoWidth = useRef(0);
   const videoHeight = useRef(0);
-  const [tfReady, setTfReady] = useState(false);
   async function getVideoMetadata(event) {
     videoWidth.current = event.target.videoWidth;
     videoHeight.current = event.target.videoHeight;
 
     // Ready and warmup model
-    setTfReady(false);
-    let tfIsReady = await readyTf(videoWidth.current, videoHeight.current);
-    setTfReady(tfIsReady);
+    detector.current = await readyTf(videoWidth.current, videoHeight.current);
   }
 
   // Variable to hold current frame image
@@ -51,18 +51,17 @@ function App() {
       const imageData = canvas.toDataURL('image/png');
       currentFrame.current = imageData;
       // console.log("currentFrame.current", currentFrame.current)
+      // For some reason can't add width and length properties to currentFrame.current w/o causing video issues
     } catch (error) {
       console.error('Error capturing frame:', error);
     }
   }
-
-  // Variable to hold current frame with pose estimation drawn on
-  const poseFrame = useRef(null);
-
+  
   // Variable to hold if currently pose estimation in progress already
   const poseInProgress = useRef(false);
 
-
+  // Variable to hold current frame with pose estimation drawn on
+  const poseFrame = useRef(null);
 
   // POSE ESTIMATION
   async function getPose() {
@@ -70,10 +69,8 @@ function App() {
     // Set pose estimation in progress variable to true
     poseInProgress.current = true;
 
-
     // Draw and update variable to hold current frame with pose estimation drawn on
-
-
+    poseFrame.current = drawPose(detector.current, currentFrame.current, videoWidth.current, videoHeight.current);
 
     // Set pose estimation in progress variable to false
     poseInProgress.current = false;
@@ -92,7 +89,7 @@ function App() {
       <input type="file" accept="video/*" onChange={handleVideoUpload} />
 
       {/* Button to start pose estimation */}
-      {tfReady && (
+      {videoSourceURL && (
         <button onClick={getPose}>Get Pose</button>
       )}
 

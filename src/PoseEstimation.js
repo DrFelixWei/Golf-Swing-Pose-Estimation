@@ -32,18 +32,25 @@ export async function readyTf(videoHeight, videoWidth) {
   warmUpTensor.dispose();
   console.log("TF READY and WARMED UP!");
 
-  // Return true to update ready status back on app.js
-  return true;
+  // Return warmed up detector to app.js
+  return detector;
 }
 
 
 // Draw pose image
-export async function drawPose() {
-  
+export async function drawPose(detector, poseFrame, width, height) {
+  // console.log(poseFrame, width, height)
+
+
+  // Create and setup canvas to draw pose on
+  const canvas = document.createElement('canvas')
 
 
 
 
+  // Image to return to app.js as 
+  var pose = new Image();
+  return pose;
 }
 
   
