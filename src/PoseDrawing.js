@@ -14,24 +14,9 @@ export function drawKeypoint(context, name, x, y, z) {
      // Draw keypoint location and size
      context.fillRect(x, y, 10, 10);
    }
-   console.log(name + " drawn.")
 }
 
-
-
-
-
-
-
-
-
-
-
-
 export function drawLine(context, keypoint1, keypoint2) {
-
-  // console.log(keypoint1);
-  // console.log(keypoint2);
 
   var startX = keypoint1.x;
   var startY = keypoint1.y;

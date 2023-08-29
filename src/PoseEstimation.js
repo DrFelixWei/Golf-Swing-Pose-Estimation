@@ -43,7 +43,6 @@ export async function drawPose(detector, currentFrame, width, height) {
 
   // Create pose with model from current frame
   const pose = await detector.estimatePoses(currentFrame);
-  console.log("pose", pose)
 
   // Create and setup canvas to draw pose on
   const canvas = document.createElement('canvas')
@@ -59,52 +58,93 @@ export async function drawPose(detector, currentFrame, width, height) {
   }); 
 
   // Connect keypoints to draw skeleton pose
-    if (pose.length !== 0) {
-      // hips
-      drawLine(context, 
-        pose[0].keypoints.find(keypoint => keypoint.name === "left_hip"), 
-        pose[0].keypoints.find(keypoint => keypoint.name === "right_hip")
-        )
-      // shoulders
-      drawLine(context, 
-        pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder"), 
-        pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder")
-        )
-      // upper arms
-      drawLine(context, 
-        pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder"), 
-        pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow")
-        )
-      drawLine(context, 
-        pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder"), 
-        pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow")
-        )
-      // lower arms
-      drawLine(context, 
-        pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow"), 
-        pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist")
-        )
-      drawLine(context, 
-        pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow"), 
-        pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist")
-        )
-      // hands
-      drawLine(context, 
-        pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist"), 
-        pose[0].keypoints.find(keypoint => keypoint.name === "left_index")
-        )
-      drawLine(context, 
-        pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"), 
-        pose[0].keypoints.find(keypoint => keypoint.name === "right_index")
-        )        
-      // neck spine
-      // back spine
-      // upper legs
-      // lower legs
+  if (pose.length !== 0) {
+    // hips
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_hip"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_hip")
+      )
+    // shoulders
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder")
+      )
 
-        
-      // console.log("context", context)
-    }
+
+    // neck spine
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_index")
+      )    
+      
+    // back spine
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_index")
+      )   
+
+
+    // upper arm left
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow")
+      )
+    // upper arm right
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow")
+      )
+    // lower arm left
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist")
+      )
+    // lower arm right
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist")
+      )
+    // hand left
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_index")
+      )
+    // hand right
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_index")
+      )    
+    // upper leg left
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_hip"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_knee")
+      )
+    // upper leg right
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_hip"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_knee")
+      )
+    // lower leg left
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_knee"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_heel")
+      )
+    // lower leg right
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_knee"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_heel")
+      )
+    // foot left
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_heel"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_foot_index")
+      )
+    // foot right
+    drawLine(context, 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_heel"), 
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_foot_index")
+      )         
+  }
 
 
 
