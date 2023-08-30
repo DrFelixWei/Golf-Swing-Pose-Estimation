@@ -49,7 +49,7 @@ function App() {
       // For some reason can't add width and length properties to currentFrame.current w/o causing video issues
 
       try {
-        
+
         // Start pose estimation on current frame
         getPose();
 
@@ -114,6 +114,7 @@ function App() {
           <img 
             src={poseFrame} alt="Pose Frame" 
             className="pose"
+            // style={{ width: "1024px" }}
             // style={{ display: "none" }}
           />
         )}
