@@ -78,12 +78,6 @@ function App() {
 
   }
 
-
-  // Add event listener / trigger for whenever currentFrameWithPose is updated and is not null to display it on canvas
-
-
-
-  
   return (
     <div>
 
@@ -97,21 +91,29 @@ function App() {
 
 
       {/* Video display */}
-      {videoSourceURL && (
-        <video
-          src={videoSourceURL}
-          style={{ width: "300px" }}
-          controls
-          muted
-          onLoadedMetadata={getVideoMetadata}
-          onTimeUpdate={captureFrame}
-          ref={videoRef}
-        ></video>
-      )}
+      <div id="videoContainer">
+        {videoSourceURL && (
+          <video
+            src={videoSourceURL}
+            style={{ width: "300px", position: 'absolute', top: 80, left: 0, zIndex: 1 }}
+            controls
+            muted
+            onLoadedMetadata={getVideoMetadata}
+            onTimeUpdate={captureFrame}
+            ref={videoRef}
+          ></video>
+        )}
 
-      {poseFrame && (
-         <img src={poseFrame} alt="Pose Frame" style={{ width: "300px" }}/>
-      )}
+        {poseFrame && (
+          <img 
+            src={poseFrame} alt="Pose Frame" 
+            style={{ width: "300px", position: 'absolute', top: 80, left: 0, zIndex: 2 }}
+          />
+        )}
+
+      </div>
+
+
 
 
 
