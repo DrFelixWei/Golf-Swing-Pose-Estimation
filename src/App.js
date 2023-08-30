@@ -35,7 +35,6 @@ function App() {
   // current rate ~4 fps 
   const videoRef = useRef(null);
   async function captureFrame() {
-    console.log("captureFrame started!")
     const video = videoRef.current;
     try {
       const frameBitmap = await createImageBitmap(video);
@@ -122,7 +121,11 @@ function App() {
       </div>
 
 
-
+      {poseFrame && (
+          <img 
+            src={poseFrame} alt="Pose Frame" 
+          />
+        )}
 
 
 
