@@ -47,9 +47,14 @@ function App() {
       currentFrame.current = imageData;
       // console.log("currentFrame.current", currentFrame.current)
       // For some reason can't add width and length properties to currentFrame.current w/o causing video issues
-    } catch (error) {
-      console.error('Error capturing frame:', error);
-    }
+
+      try {
+        
+        // Start pose estimation on current frame
+        getPose();
+
+      } catch (error) { console.log("Error getting pose:", error) }
+    } catch (error) { console.error('Error capturing frame:', error); }
   }
   
   // Variable to hold if currently pose estimation in progress already
@@ -90,12 +95,12 @@ function App() {
       )}
 
 
-      {/* Video display */}
-      <div id="videoContainer">
+      <div id="videoContainer" className="video-container">
+        {/* Video display */}
         {videoSourceURL && (
           <video
+            className="custom-video"
             src={videoSourceURL}
-            style={{ width: "300px", position: 'absolute', top: 80, left: 0, zIndex: 1 }}
             controls
             muted
             onLoadedMetadata={getVideoMetadata}
@@ -104,10 +109,12 @@ function App() {
           ></video>
         )}
 
+        {/* Pose estimation drawing */}
         {poseFrame && (
           <img 
             src={poseFrame} alt="Pose Frame" 
-            style={{ width: "300px", position: 'absolute', top: 80, left: 0, zIndex: 2 }}
+            className="pose"
+            // style={{ display: "none" }}
           />
         )}
 
