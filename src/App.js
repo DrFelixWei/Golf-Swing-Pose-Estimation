@@ -11,6 +11,7 @@ function App() {
     const file = event.target.files[0];
     const videoObjectUrl = URL.createObjectURL(file);
     setVideoSourceURL(videoObjectUrl);
+    setPoseFrame(null); // empty pose frame from previous
   }
 
   // Variable to hold tensorflow model
@@ -114,7 +115,6 @@ function App() {
           <img 
             src={poseFrame} alt="Pose Frame" 
             className="pose"
-            // style={{ width: "1024px" }}
             // style={{ display: "none" }}
           />
         )}

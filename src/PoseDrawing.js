@@ -8,11 +8,15 @@ export function drawKeypoint(context, name, x, y, z) {
                              "left_knee", "right_knee", "left_heel", "right_heel",
                              "left_foot_index", "right_foot_index", "nose"];
    if (targetKeypoints.includes(name)) {
-
      // Draw keypoint white
      context.fillStyle = 'white';
      // Draw keypoint location and size
-     context.fillRect(x, y, 10, 10);
+      // context.fillRect(x, y, 10, 10); // square keypoint
+     // circle kepoint
+     context.beginPath();
+     context.arc(x, y, 4, 0, 2 * Math.PI); // Parameters: (x, y, radius, startAngle, endAngle)
+     context.fill();
+     context.closePath();
    }
 }
 
@@ -26,7 +30,7 @@ export function drawLine(context, keypoint1, keypoint2) {
   context.beginPath();
   context.moveTo(startX, startY);
   context.lineTo(endX, endY);
-  context.strokeStyle = 'white'; 
+  context.strokeStyle = 'white'; // change this later to depend on angles measured correct or not
   context.lineWidth = 2;
   context.stroke();
 }
