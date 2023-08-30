@@ -91,7 +91,7 @@ function App() {
 
 
   return (
-    <div>
+    <div className='content'>
 
       {/* Button for user to upload video */}
       <input type="file" accept="video/*" onChange={handleVideoUpload} />

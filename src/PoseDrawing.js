@@ -37,6 +37,7 @@ export function drawLine(context, keypoint1, keypoint2) {
 
 // Angles to measure
   // ears to eyes to measure angle of head
+  // measure eye direction using ears and eyes?
   // hip angle
   // head drop
   // shoulder rotation
