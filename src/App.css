@@ -72,3 +72,8 @@
   height: 75%;
   /* Add styling for your overlay element */
 }
+
+/* Hide fullscreen button */
+video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+}
