@@ -1,12 +1,7 @@
 import './App.css';
 import React, { useState, useEffect, useRef } from 'react';
 
-import '@tensorflow/tfjs-backend-webgl';
-import * as poseDetection from '@tensorflow-models/pose-detection';
-import * as tf from '@tensorflow/tfjs-core';
-
 import { readyTf, drawPose } from './PoseEstimation';
-
 
 function App() {
 
@@ -61,19 +56,26 @@ function App() {
   const poseInProgress = useRef(false);
 
   // Variable to hold current frame with pose estimation drawn on
-  const poseFrame = useRef(null);
+  // const poseFrame = useRef(null);
+  const [poseFrame, setPoseFrame] = useState(null);
+
 
   // POSE ESTIMATION
   async function getPose() {
+
+    // Exit early and do not getPose if still processing previous one
+    if (poseInProgress.current) { return }
   
     // Set pose estimation in progress variable to true
     poseInProgress.current = true;
 
     // Draw and update variable to hold current frame with pose estimation drawn on
-    poseFrame.current = drawPose(detector.current, currentFrame.current, videoWidth.current, videoHeight.current);
+    let poseframe = await drawPose(detector.current, currentFrame.current, videoWidth.current, videoHeight.current)
+    setPoseFrame(poseframe)
 
     // Set pose estimation in progress variable to false
     poseInProgress.current = false;
+
   }
 
 
@@ -107,6 +109,9 @@ function App() {
         ></video>
       )}
 
+      {poseFrame && (
+         <img src={poseFrame} alt="Pose Frame" style={{ width: "300px" }}/>
+      )}
 
 
 

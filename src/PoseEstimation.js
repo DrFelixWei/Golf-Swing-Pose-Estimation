@@ -159,7 +159,7 @@ export async function drawPose(detector, currentFrame, width, height) {
 
 
   // Create an iamge from the canvas to return to app.js as poseFrame variable
-  const poseImage = context.getImageData(0, 0, canvas.width, canvas.height);
+  const poseImage = canvas.toDataURL('image/png');
   return poseImage;
 }
   
