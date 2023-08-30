@@ -83,22 +83,32 @@ function App() {
 
   }
 
+  // Toggle curtain element layer to hide video and show only pose element
+  const [videoHidden, setVideoHidden] = useState(false);
+  function hideVideo() {
+    setVideoHidden(!videoHidden);
+  }
+
+
   return (
     <div>
 
       {/* Button for user to upload video */}
       <input type="file" accept="video/*" onChange={handleVideoUpload} />
 
-      {/* Button to start pose estimation */}
+
+      {/* Button for toggling only pose no video */}
       {videoSourceURL && (
-        <button onClick={getPose}>Get Pose</button>
+        <button onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}</button>
       )}
+      
 
 
       <div id="videoContainer" className="video-container">
         {/* Video display */}
         {videoSourceURL && (
           <video
+            id="custom-video"
             className="custom-video"
             src={videoSourceURL}
             controls
@@ -118,14 +128,20 @@ function App() {
           />
         )}
 
+        {videoHidden && (
+          <div className = "curtain" 
+            // style={}
+          ></div>
+        )}
+
+
+      </div>
+
+      <div id="curtain">
       </div>
 
 
-      {poseFrame && (
-          <img 
-            src={poseFrame} alt="Pose Frame" 
-          />
-        )}
+      {/* {poseFrame && (<img src={poseFrame} alt="Pose Frame" />)} */}
 
 
 

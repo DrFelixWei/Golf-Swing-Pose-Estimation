@@ -1,3 +1,11 @@
+Future Ideas:
+1. Add club detection
+2. Upgrade to 3d space rendering/visualization
+3. Optimize performance -> multithreading?
+4. Allow users to save their videos
+5. Allow live video instead of upload, in react native?
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
