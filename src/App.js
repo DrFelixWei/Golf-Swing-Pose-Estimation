@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useRef } from 'react';
-
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import { readyTf, drawPose } from './PoseEstimation';
 
 function App() {
@@ -94,12 +94,16 @@ function App() {
     <div className='content'>
 
       {/* Button for user to upload video */}
-      <input type="file" accept="video/*" onChange={handleVideoUpload} />
+      <input className="button_uploadVideo"
+        type="file" accept="video/*" onChange={handleVideoUpload} 
+      />
 
 
       {/* Button for toggling only pose no video */}
       {videoSourceURL && (
-        <button onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}</button>
+        <button className="button_hideVideo" 
+          onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
+        </button>
       )}
       
 
@@ -107,12 +111,9 @@ function App() {
       <div id="videoContainer" className="video-container">
         {/* Video display */}
         {videoSourceURL && (
-          <video
-            id="custom-video"
-            className="custom-video"
+          <video id="custom-video" className="custom-video"
             src={videoSourceURL}
-            controls
-            muted
+            controls muted
             onLoadedMetadata={getVideoMetadata}
             onTimeUpdate={captureFrame}
             ref={videoRef}
@@ -121,16 +122,15 @@ function App() {
 
         {/* Pose estimation drawing */}
         {poseFrame && (
-          <img 
+          <img className="pose"
             src={poseFrame} alt="Pose Frame" 
-            className="pose"
-            // style={{ display: "none" }}
+            style={{width:videoWidth , height:videoHeight}}
           />
         )}
 
         {videoHidden && (
           <div className = "curtain" 
-            // style={}
+            style={{width:videoWidth , height:videoHeight}}
           ></div>
         )}
 

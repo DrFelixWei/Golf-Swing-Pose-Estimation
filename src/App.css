@@ -37,18 +37,60 @@
   }
 }
 
+.content {
+  /* background-color: #708944;  */
+  background-image: url('../public/Background_GolfGreen.png');
+  background-repeat: repeat;
+
+  width: 100vw;
+  height: 100vh;
+  border-radius: 20px; /* Rounded corners */
+}
+
+body {
+  overflow: hidden;
+  border-radius: 20px; /* Rounded corners */
+}
+
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Hide fullscreen button */
+video::-webkit-media-controls-fullscreen-button {
+  display: none !important;
+}
+
 .video-container {
   position: relative;
   height: 90vh;
   width: 90vw;
   padding-bottom: 75%; /* This creates a 4:3 aspect ratio, adjust as needed */
+
+  border: 5px solid #000;
+  border-radius: 10px; /* Rounded corners */
+  
 }
 
 .custom-video {
   z-index: 1;
-  position: absolute;
+  position: relative;
   width: 90vw;
   height: 90vh;
+
+  border: 5px solid blue;
+  border-radius: 10px; /* Rounded corners */
 }
 
 .custom-video::-webkit-media-controls {
@@ -66,41 +108,29 @@
   position: absolute;
 }
 
+
+
 .pose {
   z-index: 3;
   position: absolute;
-  top: 12%;
+  top: 0;
   left: 0;
   width: 90vw;
   height: 90vh;
+
+    border: 5px solid red;
+  border-radius: 10px; /* Rounded corners */
 }
 
 .curtain {
   z-index: 2;
   background-color: black;
   position: absolute;
-  top: 12%;
+  top: 0;
   left: 0;
-  width: 90vw;
-  height: 90vh;
-}
-
-/* Hide fullscreen button */
-video::-webkit-media-controls-fullscreen-button {
-  display: none !important;
-}
-
-body {
-  overflow: hidden;
+  /* width: 90vw;
+  height: 90vh; */
 }
 
 
-.content {
-  /* background-color: #708944;  */
-  background-image: url('../public/Background_GolfGreen.png');
-  background-repeat: repeat;
 
-  width: 95vw;
-  height: 95vh;
-  
-}
