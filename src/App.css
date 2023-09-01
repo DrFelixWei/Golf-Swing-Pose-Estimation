@@ -43,8 +43,14 @@
   background-repeat: repeat;
 
   width: 100vw;
+  max-width: 800px;
   height: 100vh;
-  border-radius: 20px; /* Rounded corners */
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column; /* This stacks items vertically */
+  align-items: center; /* This centers items horizontally */
 }
 
 body {
@@ -74,62 +80,44 @@ video::-webkit-media-controls-fullscreen-button {
 
 .video-container {
   position: relative;
-  height: 90vh;
-  width: 90vw;
-  padding-bottom: 75%; /* This creates a 4:3 aspect ratio, adjust as needed */
+  width: 100%;
+  
+  /* This creates a 4:3 aspect ratio, adjust as needed */
+  /* padding-bottom: 75%;  */
 
   border: 5px solid #000;
   border-radius: 10px; /* Rounded corners */
-  
-}
 
-.custom-video {
-  z-index: 1;
-  position: relative;
-  width: 90vw;
-  height: 90vh;
-
-  border: 5px solid blue;
-  border-radius: 10px; /* Rounded corners */
-}
-
-.custom-video::-webkit-media-controls {
   display: flex;
-  flex-direction: column-reverse;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
 }
 
-.custom-video::-webkit-media-controls-enclosure {
-  width: 100%;
-  bottom: 0;
+.video {
   position: absolute;
-}
+  height: 60vh;
 
+
+}
 
 
 .pose {
-  z-index: 3;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 90vw;
-  height: 90vh;
+  z-index: 3; /* Top layer */
 
-    border: 5px solid red;
-  border-radius: 10px; /* Rounded corners */
+  height: 60vh;
+
+
+  pointer-events: none; /* This ensures the image doesn't capture user interactions */
 }
 
 .curtain {
-  z-index: 2;
+  z-index: 2; /* Middle layer */
   background-color: black;
   position: absolute;
   top: 0;
   left: 0;
-  /* width: 90vw;
-  height: 90vh; */
+  width: 90vw;
+  height: 60vh;
 }
 
 

@@ -92,31 +92,33 @@ function App() {
 
   return (
     <div className='content'>
-
-      {/* Button for user to upload video */}
-      <input className="button_uploadVideo"
-        type="file" accept="video/*" onChange={handleVideoUpload} 
-      />
-
-
-      {/* Button for toggling only pose no video */}
-      {videoSourceURL && (
-        <button className="button_hideVideo" 
-          onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
-        </button>
-      )}
       
+      <h1>Swing Sync</h1>
+
+      <div className="menu">
+        {/* Button for user to upload video */}
+        <input className="button_uploadVideo"
+          type="file" accept="video/*" onChange={handleVideoUpload} 
+        />
 
 
-      <div id="videoContainer" className="video-container">
+        {/* Button for toggling only pose no video */}
+        {videoSourceURL && (
+          <button className="button_hideVideo" 
+            onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
+          </button>
+        )}
+      </div>
+
+
+      <div id="video-container" className="video-container">
         {/* Video display */}
         {videoSourceURL && (
-          <video id="custom-video" className="custom-video"
-            src={videoSourceURL}
+          <video id="video" className="video"
+            src={videoSourceURL} ref={videoRef}
             controls muted
             onLoadedMetadata={getVideoMetadata}
             onTimeUpdate={captureFrame}
-            ref={videoRef}
           ></video>
         )}
 
@@ -124,20 +126,17 @@ function App() {
         {poseFrame && (
           <img className="pose"
             src={poseFrame} alt="Pose Frame" 
-            style={{width:videoWidth , height:videoHeight}}
+            // style={{width:videoWidth , height:videoHeight}}
           />
         )}
 
         {videoHidden && (
           <div className = "curtain" 
-            style={{width:videoWidth , height:videoHeight}}
+            // style={{width:videoWidth , height:videoHeight}}
           ></div>
         )}
 
 
-      </div>
-
-      <div id="curtain">
       </div>
 
 
