@@ -94,19 +94,16 @@ video::-webkit-media-controls-fullscreen-button {
 }
 
 .video {
+  z-index: 1; /* Bottom layer */
   position: absolute;
   height: 60vh;
-
 
 }
 
 
 .pose {
   z-index: 3; /* Top layer */
-
   height: 60vh;
-
-
   pointer-events: none; /* This ensures the image doesn't capture user interactions */
 }
 
@@ -114,10 +111,12 @@ video::-webkit-media-controls-fullscreen-button {
   z-index: 2; /* Middle layer */
   background-color: black;
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 90vw;
-  height: 60vh;
+
+  width: 100%;
+  height: 85%;
+
+  pointer-events: none; /* This ensures the image doesn't capture user interactions */
+
 }
 
 

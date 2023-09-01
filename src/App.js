@@ -9,9 +9,11 @@ function App() {
   const [videoSourceURL, setVideoSourceURL] = useState(null);
   function handleVideoUpload(event) {
     const file = event.target.files[0];
-    const videoObjectUrl = URL.createObjectURL(file);
-    setVideoSourceURL(videoObjectUrl);
-    setPoseFrame(null); // empty pose frame from previous
+    if (file) {
+      const videoObjectUrl = URL.createObjectURL(file);
+      setVideoSourceURL(videoObjectUrl);
+      setPoseFrame(null); // empty pose frame from previous
+    }
   }
 
   // Variable to hold tensorflow model
