@@ -37,25 +37,31 @@
   }
 }
 
-.content {
-  /* background-color: #708944;  */
+body {
+  overflow: hidden;
+  border-radius: 20px; /* Rounded corners */
+}
+
+.content-container {
   background-image: url('../public/Background_GolfGreen.png');
   background-repeat: repeat;
 
   width: 100vw;
   max-width: 800px;
-  height: 100vh;
+  /* height: 100vh; */
   margin: 0;
   padding: 0;
+}
+
+.content {
+
+  border: 20px solid transparent;
+  border-image: url('../public/Background_GolfWhite.png') 20 repeat; /* Set the image, width, and repeat behavior */
+  border-radius: 20px; /* Rounded corners */
 
   display: flex;
   flex-direction: column; /* This stacks items vertically */
   align-items: center; /* This centers items horizontally */
-}
-
-body {
-  overflow: hidden;
-  border-radius: 20px; /* Rounded corners */
 }
 
 button {
@@ -82,11 +88,7 @@ video::-webkit-media-controls-fullscreen-button {
   position: relative;
   width: 100%;
   
-  /* This creates a 4:3 aspect ratio, adjust as needed */
-  /* padding-bottom: 75%;  */
 
-  border: 5px solid #000;
-  border-radius: 10px; /* Rounded corners */
 
   display: flex;
   flex-direction: column; /* Stack items vertically */
@@ -97,9 +99,7 @@ video::-webkit-media-controls-fullscreen-button {
   z-index: 1; /* Bottom layer */
   position: absolute;
   height: 60vh;
-
 }
-
 
 .pose {
   z-index: 3; /* Top layer */

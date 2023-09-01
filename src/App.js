@@ -93,6 +93,8 @@ function App() {
 
 
   return (
+    <div className='content-container'>
+
     <div className='content'>
       
       <h1>Swing Sync</h1>
@@ -146,6 +148,7 @@ function App() {
 
 
 
+    </div>
     </div>
   );
 }
