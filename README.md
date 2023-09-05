@@ -1,3 +1,15 @@
+<h1 align="center"> SwingSync </h1> 
+<h3 align="center"> React, TensorFlow, PoseEstimation </h3>
+
+## Project Description
+
+SwingSync is meant to help provide instant feedback on your golf swing. SwingSync uses TensorFlow pose estimation models to draw a real-time skeleton of keypoints of your body from a video. This is meant to highlight and identify patterns in your swing that may be causing an undesirable flight path (ie. head dipping too low, arms too far behind hips).
+
+
+## Contributors
+- Felix Wei
+
+
 Future Ideas:
 1. Add club detection
 2. Upgrade to 3d space rendering/visualization
