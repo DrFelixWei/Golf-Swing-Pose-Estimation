@@ -77,7 +77,9 @@ function App() {
     poseInProgress.current = true;
 
     // Draw and update variable to hold current frame with pose estimation drawn on
-    let poseframe = await drawPose(detector.current, currentFrame.current, videoWidth.current, videoHeight.current)
+    let poseframe = await drawPose(detector.current, currentFrame.current, 
+                                    videoWidth.current, videoHeight.current, 
+                                    colourEnabled)
     setPoseFrame(poseframe)
 
     // Set pose estimation in progress variable to false
@@ -91,13 +93,20 @@ function App() {
     setVideoHidden(!videoHidden);
   }
 
+  // Toggle curtain element layer to hide video and show only pose element
+  const [colourEnabled, setColourEnabled] = useState(false);
+  function enableColour() {
+    setColourEnabled(!colourEnabled);
+    getPose();
+  }
+
 
   return (
     <div className='content-container'>
 
     <div className='content'>
       
-      <h1>Swing Sync</h1>
+      <h1>SwingSync</h1>
 
       <div className="menu">
         {/* Button for user to upload video */}
@@ -112,7 +121,18 @@ function App() {
             onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
           </button>
         )}
+
+
+        {/* Button for toggling multicoloured limbs */}
+        {videoSourceURL && (
+          <button className="button_enableColour" 
+            onClick={enableColour}>{!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
+          </button>
+        )}
+
+
       </div>
+      
 
 
       <div id="video-container" className="video-container">

@@ -39,7 +39,7 @@ export async function readyTf(videoHeight, videoWidth) {
 
 
 // Draw pose image
-export async function drawPose(detector, currentFrame, width, height) {
+export async function drawPose(detector, currentFrame, width, height, colourEnabled) {
 
   // Create pose with model from current frame
   const pose = await detector.estimatePoses(currentFrame);
@@ -53,7 +53,7 @@ export async function drawPose(detector, currentFrame, width, height) {
   // Iterate through each keypoint and draw it onto canvas
   pose.forEach((item) => {
     item.keypoints.forEach((keypoint) => {
-      drawKeypoint(context, keypoint.name, keypoint.x, keypoint.y, keypoint.z)
+      drawKeypoint(context, keypoint.name, keypoint.x, keypoint.y, keypoint.z, colourEnabled)
     });
   }); 
   // Have to do a seperate calculation for head 
@@ -66,72 +66,86 @@ export async function drawPose(detector, currentFrame, width, height) {
     // hips
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "left_hip"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_hip")
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_hip"),
+      colourEnabled
       )
     // shoulders
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder")
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder"),
+      colourEnabled
       )
     // upper arm left
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow")
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow"),
+      colourEnabled
       )
     // upper arm right
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow")
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow"),
+      colourEnabled
       )
     // lower arm left
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist")
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist"),
+      colourEnabled
       )
     // lower arm right
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist")
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"),
+      colourEnabled
       )
     // hand left
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "left_index")
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_index"),
+      colourEnabled
       )
     // hand right
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_index")
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_index"),
+      colourEnabled
       )    
     // upper leg left
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "left_hip"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "left_knee")
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_knee"),
+      colourEnabled
       )
     // upper leg right
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "right_hip"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_knee")
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_knee"),
+      colourEnabled
       )
     // lower leg left
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "left_knee"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "left_heel")
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_heel"),
+      colourEnabled
       )
     // lower leg right
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "right_knee"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_heel")
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_heel"),
+      colourEnabled
       )
     // foot left
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "left_heel"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "left_foot_index")
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_foot_index"),
+      colourEnabled
       )
     // foot right
     drawLine(context, 
       pose[0].keypoints.find(keypoint => keypoint.name === "right_heel"), 
-      pose[0].keypoints.find(keypoint => keypoint.name === "right_foot_index")
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_foot_index"),
+      colourEnabled
       )  
       
     // back spine
@@ -151,10 +165,10 @@ export async function drawPose(detector, currentFrame, width, height) {
       let center_hips_z = (pose[0].keypoints.find(keypoint => keypoint.name === "left_hip").z + 
             pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").z) / 2
       let keypoint_center_hips = { name: "center_hips", x: center_hips_x, y: center_hips_y , z: center_hips_z}
-    drawLine(context, keypoint_center_shoulders, keypoint_center_hips)    
+    drawLine(context, keypoint_center_shoulders, keypoint_center_hips,colourEnabled)    
     
     // neck spine // add later if do head
-    drawLine(context, pose[0].keypoints.find(keypoint => keypoint.name === "nose"), keypoint_center_shoulders)
+    drawLine(context, pose[0].keypoints.find(keypoint => keypoint.name === "nose"), keypoint_center_shoulders,colourEnabled)
   }
 
 
