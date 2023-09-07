@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useRef } from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { readyTf, drawPose } from './PoseEstimation';
+import Modal from './InstructionsModal';
 
 function App() {
 
@@ -100,38 +101,55 @@ function App() {
     getPose();
   }
 
+  // Instructions modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className='content-container'>
 
     <div className='content'>
       
-      <h1>SwingSync</h1>
+      <h1 style={{ colour:"white"}}>SwingSync</h1>
 
-      <div className="menu">
-        {/* Button for user to upload video */}
-        <input className="button_uploadVideo"
-          type="file" accept="video/*" onChange={handleVideoUpload} 
-        />
-
-
-        {/* Button for toggling only pose no video */}
-        {videoSourceURL && (
-          <button className="button_hideVideo" 
-            onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
-          </button>
-        )}
-
-
-        {/* Button for toggling multicoloured limbs */}
-        {videoSourceURL && (
-          <button className="button_enableColour" 
-            onClick={enableColour}>{!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
-          </button>
-        )}
+      <div className="instructions">
 
 
       </div>
+
+      <button onClick={openModal}>Instructions</button>
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
+
+
+      <h3>Upload Video</h3>
+      {/* Button for user to upload video */}
+      <input className="button_uploadVideo"
+        type="file" accept="video/*" onChange={handleVideoUpload} 
+      />
+
+      {videoSourceURL && ( 
+      <div className="menu">
+
+        <h3>Options</h3>
+
+        {/* Button for toggling only pose no video */}
+        <button className="button_hideVideo" 
+          onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
+        </button>
+
+
+        {/* Button for toggling multicoloured limbs */}
+        <button className="button_enableColour" 
+          onClick={enableColour}>{!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
+        </button>
+
+      </div>
+      )}
       
 
 
