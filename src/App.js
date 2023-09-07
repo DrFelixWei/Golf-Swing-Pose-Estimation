@@ -115,15 +115,12 @@ function App() {
 
     <div className='content'>
       
-      <h1 style={{ colour:"white"}}>SwingSync</h1>
+      <h1 style={{ color:"white"}}>SwingSync</h1>
 
       <div className="instructions">
-
-
+        <button onClick={openModal}>Instructions</button>
+        <Modal isOpen={isModalOpen} onClose={closeModal} />
       </div>
-
-      <button onClick={openModal}>Instructions</button>
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
 
 
       <h3>Upload Video</h3>

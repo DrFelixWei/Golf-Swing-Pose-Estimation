@@ -2,6 +2,7 @@ import React from 'react';
 
 const Modal = ({ isOpen, onClose }) => {
   
+    // blocks screen
     const modalStyles = {
     display: isOpen ? 'block' : 'none',
     position: 'fixed',
@@ -10,18 +11,21 @@ const Modal = ({ isOpen, onClose }) => {
     width: '100%',
     height: '100%',
     background: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-    borderRadius: '10px' // Rounded corners
+    zIndex: 5 
   };
 
-  const contentStyles = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    background: 'white',
-    padding: '20px',
-    borderRadius: '10px' // Rounded corners
-  };
+    // modal content
+    const contentStyles = {
+        position: 'absolute',
+        top: '10vh',
+        left: '10vw',
+        // transform: 'translate(-50vw, -50vh)',
+        width: '80vw',
+        maxWidth: '700px',
+        background: 'white',
+        padding: '20px',
+        borderRadius: '10px' // Rounded corners
+    };
 
   return (
     <div style={modalStyles}>
