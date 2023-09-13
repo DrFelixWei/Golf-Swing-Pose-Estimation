@@ -26,6 +26,7 @@ Built with React and yarn as the package manager.
 3. Optimize performance (multithreading possibilities)
 4. Allow users to save their videos
 5. Allow users to input a live video instead of uploading (possibly using react native instead)
+6. Connect to Unity to 3d model
 
 ## Contents of Folder
 -
