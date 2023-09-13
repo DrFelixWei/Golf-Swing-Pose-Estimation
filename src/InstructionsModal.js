@@ -11,20 +11,21 @@ const Modal = ({ isOpen, onClose }) => {
     width: '100%',
     height: '100%',
     background: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
-    zIndex: 5 
+    zIndex: 20 
   };
 
     // modal content
     const contentStyles = {
         position: 'absolute',
-        top: '10vh',
-        left: '10vw',
-        // transform: 'translate(-50vw, -50vh)',
+        top: '10px',
+        left: '10px',
+        transform: 'translate(-10vw, -10vh)',
         width: '80vw',
-        maxWidth: '700px',
+        maxWidth: '600px',
         background: 'white',
         padding: '20px',
-        borderRadius: '10px' // Rounded corners
+        borderRadius: '10px', // Rounded corners
+        zIndex: 20
     };
 
   return (

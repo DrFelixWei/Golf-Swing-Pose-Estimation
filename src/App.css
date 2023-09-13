@@ -132,4 +132,16 @@ video::-webkit-media-controls-fullscreen-button {
 }
 
 
+.dashboard {
+  /* frosted glass effect */
+  background: rgba(255, 255, 255, 0.1); /* Adjust the opacity as needed */
+  backdrop-filter: blur(1px); /* Adjust the blur amount as needed */
+  border-radius: 10px; /* Add rounded corners if desired */
+  padding: 20px; /* Add padding to the element */
+
+  display: flex;
+  flex-direction: column; /* Arrange children vertically */
+  align-items: center; /* Center children horizontally */
+  justify-content: flex-start; /* Start at the top */
+}
 

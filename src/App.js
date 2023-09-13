@@ -117,37 +117,41 @@ function App() {
       
       <h1 style={{ color:"white"}}>SwingSync</h1>
 
-      <div className="instructions">
-        <button onClick={openModal}>Instructions</button>
-        <Modal isOpen={isModalOpen} onClose={closeModal} />
+      <div className="dashboard">
+
+        <div className="instructions">
+          <button onClick={openModal}>Instructions</button>
+          <Modal isOpen={isModalOpen} onClose={closeModal} />
+        </div>
+
+        <h3>Upload Video</h3>
+        {/* Button for user to upload video */}
+        <input className="button_uploadVideo"
+          type="file" accept="video/*" onChange={handleVideoUpload} 
+        />
+
+        {videoSourceURL && ( 
+          <h3>Options</h3>
+        )}
+
+        {videoSourceURL && ( 
+        <div className="menu_buttons">
+
+          {/* Button for toggling only pose no video */}
+          <button className="button_hideVideo" 
+            onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
+          </button>
+
+
+          {/* Button for toggling multicoloured limbs */}
+          <button className="button_enableColour" 
+            onClick={enableColour}>{!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
+          </button>
+
+        </div>
+        )}
+
       </div>
-
-
-      <h3>Upload Video</h3>
-      {/* Button for user to upload video */}
-      <input className="button_uploadVideo"
-        type="file" accept="video/*" onChange={handleVideoUpload} 
-      />
-
-      {videoSourceURL && ( 
-      <div className="menu">
-
-        <h3>Options</h3>
-
-        {/* Button for toggling only pose no video */}
-        <button className="button_hideVideo" 
-          onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
-        </button>
-
-
-        {/* Button for toggling multicoloured limbs */}
-        <button className="button_enableColour" 
-          onClick={enableColour}>{!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
-        </button>
-
-      </div>
-      )}
-
 
       <div id="video-container" className="video-container">
         {/* Video display */}
