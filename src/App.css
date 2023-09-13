@@ -51,6 +51,8 @@ body {
   /* height: 100vh; */
   margin: 0;
   padding: 0;
+
+
 }
 
 .content {
@@ -62,6 +64,7 @@ body {
   display: flex;
   flex-direction: column; /* This stacks items vertically */
   align-items: center; /* This centers items horizontally */
+  
 }
 
 button {
@@ -70,14 +73,14 @@ button {
   margin: 5px;
   font-size: 16px;
   border: none;
-  background-color: #007bff;
+  background-color: darkgreen;
   color: white;
   border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: lightgreen;
 }
 
 /* Hide fullscreen button */
@@ -101,7 +104,7 @@ video::-webkit-media-controls-fullscreen-button {
   position: absolute;
   height: 60vh;
   max-width: 800px;
-  
+  overflow-x: hidden;
 }
 
 .pose {
@@ -109,6 +112,7 @@ video::-webkit-media-controls-fullscreen-button {
   height: 60vh;
   pointer-events: none; /* This ensures the image doesn't capture user interactions */
   max-width: 800px;
+  overflow-x: hidden;
 
 }
 
@@ -120,9 +124,10 @@ video::-webkit-media-controls-fullscreen-button {
   width: 100%;
   max-width: 800px;
   height: 85%;
-  
+  overflow-x: hidden;
 
   pointer-events: none; /* This ensures the image doesn't capture user interactions */
+
 
 }
 

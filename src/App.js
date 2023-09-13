@@ -147,7 +147,6 @@ function App() {
 
       </div>
       )}
-      
 
 
       <div id="video-container" className="video-container">
@@ -171,7 +170,7 @@ function App() {
 
         {videoHidden && (
           <div className = "curtain" 
-            // style={{width:videoWidth , height:videoHeight}}
+            // style={{width:videoWidth.current}}
           ></div>
         )}
 
