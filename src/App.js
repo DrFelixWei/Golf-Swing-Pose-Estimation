@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import { readyTf, drawPose } from './PoseEstimation';
 import Modal from './InstructionsModal';
+import IconGolfer2 from './Icon_Golfer2.png';
 
 function App() {
 
@@ -115,7 +116,10 @@ function App() {
 
     <div className='content'>
       
-      <h1 style={{ color:"white"}}>SwingSync</h1>
+      <div className ="title-container">
+        <h1 className="title">SwingSync</h1>
+        <img className="title-icon" src={IconGolfer2} alt="golfer_icon"/>
+      </div>
 
       <div className="dashboard">
 
@@ -131,7 +135,7 @@ function App() {
         />
 
         {videoSourceURL && ( 
-          <h3>Options</h3>
+            <h3>Options</h3>
         )}
 
         {videoSourceURL && ( 

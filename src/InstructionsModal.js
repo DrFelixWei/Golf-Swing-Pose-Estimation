@@ -36,8 +36,8 @@ const Modal = ({ isOpen, onClose }) => {
             <li>Upload a video of your golf swing</li>
             <li>Wait 3-5 seconds for the model to load</li>
             <li>Play the video and the model will automatically start</li>
-            <li>Use the in video control bar to navigate through your video</li>
-            <li>Optional: toggle various menu options</li>
+            <li>Use the in video control bar to navigate through your video and adjust playback speed</li>
+            <li>Optional: toggle menu options as needed</li>
         </ol>
         <button onClick={onClose}>Close</button>
       </div>

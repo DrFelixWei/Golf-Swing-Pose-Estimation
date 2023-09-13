@@ -1,3 +1,10 @@
+/* Disable dark mode */
+/* @media (prefers-color-scheme: dark) {
+  body {
+    filter: invert(100%) hue-rotate(180deg);
+  }
+} */
+
 .App {
   text-align: center;
 }
@@ -51,8 +58,31 @@ body {
   /* height: 100vh; */
   margin: 0;
   padding: 0;
+}
 
+.title-container {
+  display: flex;
+  flex-direction: row; /* Default value, you can omit this line */
+  justify-content: flex-start; /* Align children from left to right */
+  align-items: center; /* Vertically align children in the center (optional) */
+}
 
+.title {
+  font-size: 60px;
+  letter-spacing: 2px;
+  font-weight: bold;
+
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Horizontal offset, vertical offset, blur radius, and shadow color */
+
+  /* background: linear-gradient(45deg, #3498db, #e74c3c);
+  -webkit-background-clip: text;
+  color: transparent; */
+  color: white;
+}
+
+.title-icon {
+  height: 70px;
+  filter: invert(1);
 }
 
 .content {
@@ -127,7 +157,6 @@ video::-webkit-media-controls-fullscreen-button {
   overflow-x: hidden;
 
   pointer-events: none; /* This ensures the image doesn't capture user interactions */
-
 
 }
 
