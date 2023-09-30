@@ -15,7 +15,7 @@ export function drawKeypoint(context, name, x, y, z, colourEnabled) {
     
     // Draw keypoint location and size
     context.beginPath();
-    context.arc(x, y, 4, 0, 2 * Math.PI); // Parameters: (x, y, radius, startAngle, endAngle)
+    context.arc(x, y, 6, 0, 2 * Math.PI); // Parameters: (x, y, radius, startAngle, endAngle)
     context.fill();
     context.closePath();
   }
@@ -36,7 +36,7 @@ export function drawLine(context, keypoint1, keypoint2, colourEnabled) {
   if (colourEnabled) { colour = getColour(keypoint1.name) }
   context.strokeStyle = colour; 
   // Draw line 
-  context.lineWidth = 2;
+  context.lineWidth = 4;
   context.stroke();
 }
 
