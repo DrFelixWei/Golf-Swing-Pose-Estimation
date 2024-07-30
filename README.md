@@ -12,7 +12,8 @@ SwingSync is meant to help provide instant feedback on your golf swing. SwingSyn
 https://swingsync.netlify.app/
 
 ## Demo
-<iframe width="560" height="315" src="[https://www.youtube.com/embed/dQw4w9WgXcQ](https://youtu.be/u_s1TuE0fpc)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![Watch the video](https://img.youtube.com/vi/u_s1TuE0fpc/0.jpg)](https://www.youtube.com/watch?v=u_s1TuE0fpc)
+
 
 ## Installation
 Built with React and yarn as the package manager. 
