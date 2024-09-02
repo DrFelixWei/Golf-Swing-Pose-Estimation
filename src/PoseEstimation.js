@@ -25,7 +25,8 @@ export async function readyTf(videoHeight, videoWidth) {
   // Create a warm-up tensor filled with zeros
   const warmUpTensor = tf.fill([videoHeight, videoWidth, 3],0,'float32');
   // Perform a dummy inference for warm-up
-  await detector.estimatePoses(warmUpTensor, {
+
+  await detector?.estimatePoses(warmUpTensor, {
     maxPoses: detectorConfig.maxPoses,
     flipHorizontal: false
   });
