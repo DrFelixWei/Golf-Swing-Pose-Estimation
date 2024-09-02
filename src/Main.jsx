@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Container, CssBaseline, Box, Typography, useMediaQuery } from '@mui/material';
 import { styled, useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Pose from './Pose';
+import InstructionsModal from './InstructionsModal';
 import { readyTf, drawPose } from './PoseEstimation';
-import Modal from './InstructionsModal';
 import IconGolfer2 from './Icon_Golfer2.png';
 
 function Main() {
@@ -142,7 +142,7 @@ function Main() {
 
           <Box>
             <button onClick={openModal}>See Instructions</button>
-            <Modal isOpen={isModalOpen} onClose={closeModal} />
+            <InstructionsModal isOpen={isModalOpen} onClose={closeModal} />
           </Box>
 
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
