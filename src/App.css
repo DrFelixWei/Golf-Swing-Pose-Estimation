@@ -9,16 +9,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
   background-color: #282c34;
@@ -44,64 +34,57 @@
   }
 }
 
+/* App.css */
 body {
-  /* overflow: hidden; */
-  border-radius: 20px; /* Rounded corners */
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+  border-radius: 20px; 
 }
 
 .content-container {
   background-image: url('../public/Background_GolfGreen.png');
   background-repeat: repeat;
-
   width: 100vw;
-  /* max-width: 800px; */
-  /* height: 100vh; */
   margin: 0;
   padding: 0;
-
   min-height: 150vh;
 }
 
 .content {
-
-  border: 20px solid transparent;
-  border-image: url('../public/Background_GolfWhite.png') 20 repeat; /* Set the image, width, and repeat behavior */
-  border-radius: 20px; /* Rounded corners */
-
+  border: 10px solid transparent;
+  border-image: url('../public/Background_GolfWhite.png') 20 repeat; 
   display: flex;
-  flex-direction: column; /* This stacks items vertically */
-  align-items: center; /* This centers items horizontally */
- 
+  flex-direction: column; 
+  align-items: center;
   width: calc(100vw - 40px);
-  /* max-width: 800px; */
-
   min-height: 150vh;
 }
 
-.title-container {
+.container {
   display: flex;
-  flex-direction: row; /* Default value, you can omit this line */
-  justify-content: flex-start; /* Align children from left to right */
-  align-items: center; /* Vertically align children in the center (optional) */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+  max-width: 500px;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-.title {
-  font-size: 60px;
-  letter-spacing: 2px;
-  font-weight: bold;
-
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Horizontal offset, vertical offset, blur radius, and shadow color */
-
-  /* background: linear-gradient(45deg, #3498db, #e74c3c);
-  -webkit-background-clip: text;
-  color: transparent; */
-  color: white;
+/* Media query for larger screens */
+@media (min-width: 600px) {
+  .container {
+    width: 500px;
+  }
 }
 
-.title-icon {
-  height: 70px;
-  filter: invert(1);
-}
 
 button {
   display: inline-block;
@@ -124,25 +107,6 @@ video::-webkit-media-controls-fullscreen-button {
   display: none !important;
 }
 
-.video-container {
-  position: relative;
-  width: 100%;
-  max-width: 800px;
-
-
-  display: flex;
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center items horizontally */
-}
-
-.video {
-  z-index: 1; /* Bottom layer */
-  position: absolute;
-  height: 60vh;
-  max-width: 800px;
-  overflow-x: hidden;
-}
-
 .pose {
   z-index: 3; /* Top layer */
   height: 60vh;
@@ -152,31 +116,4 @@ video::-webkit-media-controls-fullscreen-button {
 
 }
 
-.curtain {
-  z-index: 2; /* Middle layer */
-  background-color: black;
-  position: absolute;
-
-  width: 100%;
-  max-width: 800px;
-  height: 85%;
-  overflow-x: hidden;
-
-  pointer-events: none; /* This ensures the image doesn't capture user interactions */
-
-}
-
-
-.dashboard {
-  /* frosted glass effect */
-  background: rgba(255, 255, 255, 0.1); /* Adjust the opacity as needed */
-  backdrop-filter: blur(1px); /* Adjust the blur amount as needed */
-  border-radius: 10px; /* Add rounded corners if desired */
-  padding: 20px; /* Add padding to the element */
-
-  display: flex;
-  flex-direction: column; /* Arrange children vertically */
-  align-items: center; /* Center children horizontally */
-  justify-content: flex-start; /* Start at the top */
-}
 

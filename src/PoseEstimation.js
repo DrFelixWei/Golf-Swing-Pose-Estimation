@@ -2,7 +2,7 @@ import '@tensorflow/tfjs-backend-webgl';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import * as tf from '@tensorflow/tfjs-core';
 
-import {drawKeypoint, drawLine} from './PoseDrawing';
+import {drawKeypoint, drawLine, drawStat} from './PoseDrawing';
 
 
 // Load BlazePoze
@@ -37,6 +37,7 @@ export async function readyTf(videoHeight, videoWidth) {
   return detector;
 }
 
+const poseFrameData = {}
 
 // Draw pose image
 export async function drawPose(detector, currentFrame, width, height, colourEnabled) {
@@ -54,6 +55,8 @@ export async function drawPose(detector, currentFrame, width, height, colourEnab
   // Iterate through each keypoint and draw it onto canvas
   pose.forEach((item) => {
     item.keypoints.forEach((keypoint) => {
+      poseFrameData[keypoint.name] = { "x":keypoint.x, "y":keypoint.y, "z":keypoint.z}
+      // console.log(poseFrameData)
       drawKeypoint(context, keypoint.name, keypoint.x, keypoint.y, keypoint.z, colourEnabled)
     });
   }); 
@@ -170,6 +173,9 @@ export async function drawPose(detector, currentFrame, width, height, colourEnab
     
     // neck spine // add later if do head
     drawLine(context, pose[0].keypoints.find(keypoint => keypoint.name === "nose"), keypoint_center_shoulders,colourEnabled)
+
+
+    // drawStats(context, "TEST")
   }
 
 
@@ -181,6 +187,8 @@ export async function drawPose(detector, currentFrame, width, height, colourEnab
 
 
 export async function calculateStats() {
+
+  // will need to diffentiate front vs side view -> use heel points to see if bigger difference is in the y or z
 
   // head drop from mid point of shoulers to nose
 

@@ -72,6 +72,18 @@ function getColour(name) {
   }
 }
 
+
+export function drawStat(context, stat) {
+  const x = 10;  
+  const y = 50;  
+  context.font = '66px Arial'; 
+  context.fillStyle = 'white'; 
+  context.textAlign = 'left';  
+  context.textBaseline = 'top';
+  context.fillText(stat, x, y); // Draw the stat text at the top-left corner
+}
+
+
 // Angles to measure
   // ears to eyes to measure angle of head
   // measure eye direction using ears and eyes?
