@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { Container, CssBaseline, Box, Typography, useMediaQuery } from '@mui/material';
-import { styled, useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
-import Pose from './Pose';
+import { Box, Typography } from '@mui/material';
+// import Pose from './Pose';
 import InstructionsModal from './InstructionsModal';
 import { readyTf, drawPose } from './PoseEstimation';
 import IconGolfer2 from './Icon_Golfer2.png';

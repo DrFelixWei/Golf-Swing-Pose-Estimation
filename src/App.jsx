@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { Container, CssBaseline, Box, Typography, useMediaQuery } from '@mui/material';
-import { styled, useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import React from 'react';
+import { CssBaseline, Box, useMediaQuery } from '@mui/material';
+import { styled,  ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
 import Main from './Main';
 
