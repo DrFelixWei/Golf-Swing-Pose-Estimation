@@ -38,6 +38,7 @@ const Root = styled(Box)(({ theme }) => ({
 
 function App() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  console.log(isSmallScreen)
   
   return (
     <ThemeProvider theme={theme}>
