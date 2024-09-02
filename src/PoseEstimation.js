@@ -16,15 +16,14 @@ console.log("BlazePose loaded!")
 // Ready and warmup tensorflow
 export async function readyTf(videoHeight, videoWidth) {
   console.log("TF WARMING UP...")
-
   await tf.ready();
   console.log("TF READY...")
-
   // Warmup
   const detector = await poseDetection.createDetector(model, detectorConfig);
   // Create a warm-up tensor filled with zeros
   const warmUpTensor = tf.fill([videoHeight, videoWidth, 3],0,'float32');
   // Perform a dummy inference for warm-up
+  console.log("TF WARMED UP")
 
   await detector?.estimatePoses(warmUpTensor, {
     maxPoses: detectorConfig.maxPoses,
@@ -43,7 +42,8 @@ export async function readyTf(videoHeight, videoWidth) {
 export async function drawPose(detector, currentFrame, width, height, colourEnabled) {
 
   // Create pose with model from current frame
-  const pose = await detector.estimatePoses(currentFrame);
+  const pose = await detector?.estimatePoses(currentFrame);
+  if (!pose) { return} 
 
   // Create and setup canvas to draw pose on
   const canvas = document.createElement('canvas')
@@ -180,6 +180,18 @@ export async function drawPose(detector, currentFrame, width, height, colourEnab
   
 
 
+export async function calculateStats() {
+
+  // head drop from mid point of shoulers to nose
+
+  // shoulder alignment from left to right 
+
+  // hip alignment from left to right
+
+  // wrist bowing
+
+
+}
 
 // Angles to measure -> use to colour skeleton to indicate good or bad form
   // ears to eyes to measure angle of head
