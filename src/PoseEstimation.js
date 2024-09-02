@@ -2,7 +2,7 @@ import '@tensorflow/tfjs-backend-webgl';
 import * as poseDetection from '@tensorflow-models/pose-detection';
 import * as tf from '@tensorflow/tfjs-core';
 
-import {drawKeypoint, drawLine, drawStat} from './PoseDrawing';
+import {drawKeypoint, drawLine} from './PoseDrawing';
 
 
 // Load BlazePoze
