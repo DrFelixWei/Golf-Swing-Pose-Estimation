@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Box, Typography } from '@mui/material';
 // import Pose from './Pose';
 import InstructionsModal from './InstructionsModal';
-import { readyTf, drawPose } from './PoseEstimation';
+import { readyTf, drawPose, calculateStats } from './PoseEstimation';
 import IconGolfer2 from './Icon_Golfer2.png';
 
 function Main() {
@@ -68,7 +68,8 @@ function Main() {
   // Variable to hold current frame with pose estimation drawn on
   // const poseFrame = useRef(null);
   const [poseFrame, setPoseFrame] = useState(null);
-
+  const [poseData, setPoseData] = useState(null);
+  const [poseStats, setPoseStats] = useState(null);
 
   // POSE ESTIMATION
   async function getPose() {
@@ -79,11 +80,24 @@ function Main() {
     // Set pose estimation in progress variable to true
     poseInProgress.current = true;
 
-    // Draw and update variable to hold current frame with pose estimation drawn on
-    let poseframe = await drawPose(detector.current, currentFrame.current, 
-                                    videoWidth.current, videoHeight.current, 
-                                    colourEnabled)
-    setPoseFrame(poseframe)
+  // Draw and update variable to hold current frame with pose estimation drawn on
+  const result = await drawPose(detector.current, currentFrame.current, 
+    videoWidth.current, videoHeight.current, 
+    colourEnabled);
+
+    if (result) { 
+      const { pose, poseImage } = result
+      setPoseFrame(poseImage)
+
+      if (pose) {
+        setPoseData(pose)
+        const stats = calculateStats(pose)
+        setPoseStats(stats)
+      }
+
+    } else {
+      return
+    }
 
     // Set pose estimation in progress variable to false
     poseInProgress.current = false;
@@ -162,6 +176,22 @@ function Main() {
               <button 
                 onClick={enableColour}>{!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
               </button>
+            </Box>
+          }
+
+          {videoSourceURL && poseData && poseStats &&  
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Typography variant="body">Stats: </Typography>
+
+              {Object.entries(poseStats).map(([key, value]) => (
+                <Box key={key} sx={{ display: 'flex', alignItems: 'center', margin: '4px 0' }}>
+                  <Typography variant="body1" sx={{ fontWeight: 'bold', marginRight: '8px' }}>
+                    {key}
+                  </Typography>
+                  <Typography variant="body1">{value}</Typography>
+                </Box>
+              ))}
+
             </Box>
           }
         </Box>

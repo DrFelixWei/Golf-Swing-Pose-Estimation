@@ -60,9 +60,10 @@ export async function drawPose(detector, currentFrame, width, height, colourEnab
       drawKeypoint(context, keypoint.name, keypoint.x, keypoint.y, keypoint.z, colourEnabled)
     });
   }); 
+
   // Have to do a seperate calculation for head 
     // add later if can get ears. currently could do eye to eye for forehead but not really aligned
-    // Using nose for now.
+    // Using nose for now
 
 
   // Connect keypoints to draw skeleton pose
@@ -181,25 +182,103 @@ export async function drawPose(detector, currentFrame, width, height, colourEnab
 
   // Create an iamge from the canvas to return to app.js as poseFrame variable
   const poseImage = canvas.toDataURL('image/png');
-  return poseImage;
+  return { pose, poseImage};
 }
-  
 
+export function calculateViewType(data) { 
+  const footLength = (Math.abs(data.left_heel.x - data.left_toe.x) + Math.abs(data.right_heel.x - data.right_toe.x)/2)
+  const footDistance = (Math.abs(data.left_heel.x - data.right_heel.x) + Math.abs(data.left_toe.x - data.right_toe.x)/2)
+  if (footLength > footDistance) {
+    return "side"
+  } else {
+    return "front"
+  }
+}
 
-export async function calculateStats() {
+export function calculateStats(pose) {
+  // get view type
+  if (pose.length === 0) { return }
 
-  // will need to diffentiate front vs side view -> use heel points to see if bigger difference is in the y or z
+  const viewType = calculateViewType({
+    "left_heel" : pose[0].keypoints.find(keypoint => keypoint.name === "left_heel"),
+    "left_toe" : pose[0].keypoints.find(keypoint => keypoint.name === "left_foot_index"),
+    "right_heel" : pose[0].keypoints.find(keypoint => keypoint.name === "right_heel"),
+    "right_toe" : pose[0].keypoints.find(keypoint => keypoint.name === "right_foot_index"),
+  })
 
   // head drop from mid point of shoulers to nose
-
-  // shoulder alignment from left to right 
-
-  // hip alignment from left to right
-
   // wrist bowing
+
+  if (viewType === "side") {
+
+  } else if (viewType === "front") {
+    let hipLean = (pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").y 
+                    - pose[0].keypoints.find(keypoint => keypoint.name === "left_hip").y) / 
+                    (pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").x 
+                    - pose[0].keypoints.find(keypoint => keypoint.name === "left_hip").x)
+
+    let shoulderLean = (pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").y 
+                      - pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").y) / 
+                      (pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").x 
+                      - pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").x)
+
+    let headDrop = pose[0].keypoints.find(keypoint => keypoint.name === "nose").y 
+                    - (pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").y 
+                    + pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").y) / 2
+
+    let leftWristAngle = calculateAngle(
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist"),
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_index"),
+      pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow"))
+
+    let rightWristAngle = calculateAngle(
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"),
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_index"),
+      pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow"))
+
+    let poseStats = {
+      hipLean: parseFloat((hipLean * 100).toFixed(1)),
+      shoulderLean: parseFloat(shoulderLean.toFixed(1)),
+      headDrop: parseFloat(headDrop.toFixed(1)),
+      leftWristAngle: parseFloat(leftWristAngle.toFixed(1)),
+      rightWristAngle: parseFloat(rightWristAngle.toFixed(1)),
+    }
+    return poseStats
+
+  } else {
+    console.log("ERROR")
+  }
 
 
 }
+
+function calculateAngle(a, b, c) {
+  const vector1 = {
+    x: a.x - b.x,
+    y: a.y - b.y,
+  };
+
+  const vector2 = {
+    x: c.x - b.x,
+    y: c.y - b.y,
+  };
+
+  // Calculate the dot product of the vectors
+  const dotProduct = (vector1.x * vector2.x) + (vector1.y * vector2.y);
+
+  // Calculate the magnitude of the vectors
+  const magnitude1 = Math.sqrt((vector1.x ** 2) + (vector1.y ** 2));
+  const magnitude2 = Math.sqrt((vector2.x ** 2) + (vector2.y ** 2));
+
+  // Calculate the angle in radians
+  const angleInRadians = Math.acos(dotProduct / (magnitude1 * magnitude2));
+
+  // Convert the angle to degrees
+  const angleInDegrees = angleInRadians * (180 / Math.PI);
+
+  return angleInDegrees;
+}
+
 
 // Angles to measure -> use to colour skeleton to indicate good or bad form
   // ears to eyes to measure angle of head
