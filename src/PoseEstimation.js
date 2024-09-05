@@ -205,11 +205,41 @@ export function calculateStats(pose) {
     "right_heel" : pose[0].keypoints.find(keypoint => keypoint.name === "right_heel"),
     "right_toe" : pose[0].keypoints.find(keypoint => keypoint.name === "right_foot_index"),
   })
-
-  // head drop from mid point of shoulers to nose
-  // wrist bowing
+  console.log("viewType", viewType)
 
   if (viewType === "side") {
+    let hipLean = (pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").y 
+        - pose[0].keypoints.find(keypoint => keypoint.name === "left_hip").y) / 
+        (pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").x 
+        - pose[0].keypoints.find(keypoint => keypoint.name === "left_hip").x)
+
+    let shoulderLean = (pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").y 
+          - pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").y) / 
+          (pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").x 
+          - pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").x)
+
+    let headDrop = pose[0].keypoints.find(keypoint => keypoint.name === "nose").y 
+        - (pose[0].keypoints.find(keypoint => keypoint.name === "left_shoulder").y 
+        + pose[0].keypoints.find(keypoint => keypoint.name === "right_shoulder").y) / 2
+
+    let leftWristAngle = calculateAngle(
+    pose[0].keypoints.find(keypoint => keypoint.name === "left_wrist"),
+    pose[0].keypoints.find(keypoint => keypoint.name === "left_index"),
+    pose[0].keypoints.find(keypoint => keypoint.name === "left_elbow"))
+
+    let rightWristAngle = calculateAngle(
+    pose[0].keypoints.find(keypoint => keypoint.name === "right_wrist"),
+    pose[0].keypoints.find(keypoint => keypoint.name === "right_index"),
+    pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow"))
+
+    let poseStats = {
+      "Hip Lean": (hipLean * 100).toFixed(1),
+      "Shoulder Lean": shoulderLean.toFixed(1),
+      "Head Drop": headDrop.toFixed(1),
+      "Left Wrist Angle": leftWristAngle.toFixed(1),
+      "Right Wrist Angle": rightWristAngle.toFixed(1),
+    }
+    return poseStats
 
   } else if (viewType === "front") {
     let hipLean = (pose[0].keypoints.find(keypoint => keypoint.name === "right_hip").y 
@@ -237,11 +267,11 @@ export function calculateStats(pose) {
       pose[0].keypoints.find(keypoint => keypoint.name === "right_elbow"))
 
     let poseStats = {
-      hipLean: parseFloat((hipLean * 100).toFixed(1)),
-      shoulderLean: parseFloat(shoulderLean.toFixed(1)),
-      headDrop: parseFloat(headDrop.toFixed(1)),
-      leftWristAngle: parseFloat(leftWristAngle.toFixed(1)),
-      rightWristAngle: parseFloat(rightWristAngle.toFixed(1)),
+      "Hip Lean": (hipLean * 100).toFixed(1),
+      "Shoulder Lean": shoulderLean.toFixed(1),
+      "Head Drop": headDrop.toFixed(1),
+      "Left Wrist Angle": leftWristAngle.toFixed(1),
+      "Right Wrist Angle": rightWristAngle.toFixed(1),
     }
     return poseStats
 

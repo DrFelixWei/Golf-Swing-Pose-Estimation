@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Box, Typography } from '@mui/material';
+import React, { useState, useRef } from 'react';
+import { Box, Typography, IconButton, Tooltip } from '@mui/material';
+import { HelpOutline } from '@mui/icons-material';
 // import Pose from './Pose';
 import InstructionsModal from './InstructionsModal';
 import { readyTf, drawPose, calculateStats } from './PoseEstimation';
@@ -94,10 +95,7 @@ function Main() {
         const stats = calculateStats(pose)
         setPoseStats(stats)
       }
-
-    } else {
-      return
-    }
+    } 
 
     // Set pose estimation in progress variable to false
     poseInProgress.current = false;
@@ -129,20 +127,27 @@ function Main() {
   return (
     <div className='content-container'>
       <div className='content'>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography variant="h2">SwingSync</Typography>
-
+        <Box width="550px" display="flex" alignItems="center" justifyContent="space-between" padding={2}>
           <img 
             src={IconGolfer2} 
             alt="golfer_icon"
             style={{ height: '70px', filter: 'invert(1)' }} 
           />
+
+          <Typography variant="h2">SwingSync</Typography>
+          
+          <Tooltip title="Help">
+            <IconButton onClick={openModal}>
+              <HelpOutline style={{ backgroundColor: '#e2dfdb', borderRadius: '50%' }} />
+            </IconButton>
+          </Tooltip>
         </Box>
+
 
         {/* DASHBOARD */}
         <Box
           sx={{
-            background: 'rgba(255, 255, 255, 0.1)', // Frosted glass effect
+            background: 'rgba(255, 255, 255, 0.3)', // Frosted glass effect
             backdropFilter: 'blur(1px)', // Blur effect
             borderRadius: '10px', 
             padding: '20px',
@@ -152,15 +157,11 @@ function Main() {
             justifyContent: 'flex-start',
           }}
         >
-
-          <Box>
-            <button onClick={openModal}>See Instructions</button>
-            <InstructionsModal isOpen={isModalOpen} onClose={closeModal} />
-          </Box>
+          <InstructionsModal isOpen={isModalOpen} onClose={closeModal} />
 
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
 
-          <Typography variant="body">Upload Video: </Typography>
+          <Typography variant="body">Upload Video:&nbsp; </Typography>
           <input className="button_uploadVideo"
             type="file" accept="video/*" onChange={handleVideoUpload} 
           />
@@ -169,7 +170,7 @@ function Main() {
 
           {videoSourceURL &&  
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Typography variant="body">Options: </Typography>
+              <Typography variant="body">Options:&nbsp; </Typography>
               <button 
                 onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
               </button>
@@ -180,15 +181,26 @@ function Main() {
           }
 
           {videoSourceURL && poseData && poseStats &&  
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: 'wrap', 
+                maxWidth: '500px',
+              }}
+            >
               <Typography variant="body">Stats: </Typography>
 
               {Object.entries(poseStats).map(([key, value]) => (
-                <Box key={key} sx={{ display: 'flex', alignItems: 'center', margin: '4px 0' }}>
-                  <Typography variant="body1" sx={{ fontWeight: 'bold', marginRight: '8px' }}>
-                    {key}
+                <Box key={key} sx={{ display: 'flex', alignItems: 'center', margin: '4px 10px 0 10px' }}>
+                  <Typography variant="caption">
+                    {key}:&nbsp;
                   </Typography>
-                  <Typography variant="body1">{value}</Typography>
+                  <Typography variant="caption" sx={{ color: 'red' }}>
+                    {value}
+                  </Typography>
+                  
                 </Box>
               ))}
 
