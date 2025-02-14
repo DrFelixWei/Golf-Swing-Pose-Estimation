@@ -1,13 +1,11 @@
 import React, { useState, useRef } from 'react';
-import { Box, Button, Typography, IconButton, Tooltip } from '@mui/material';
-import { HelpOutline } from '@mui/icons-material';
-// import Pose from './Pose';
-import InstructionsModal from './InstructionsModal';
+import { Box } from '@mui/material';
 import { readyTf, drawPose, calculateStats } from './PoseEstimation';
-import IconGolfer2 from './Icon_Golfer2.png';
+import Header from './components/Header';
+import Dashboard from './components/Dashboard';
+import InstructionsModal from './components/InstructionsModal';
 
 function Main() {
-  // Handle user uploading video source
   const [videoSourceURL, setVideoSourceURL] = useState(null);
   function handleVideoUpload(event) {
     const file = event.target.files[0];
@@ -114,184 +112,89 @@ function Main() {
   }
 
   // Instructions modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInstructionsModalOpen, setIsInstructionsModalOpen] = useState(false);
   const openModal = () => {
-    setIsModalOpen(true);
+    setIsInstructionsModalOpen(true);
   };
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsInstructionsModalOpen(false);
   };
 
-  const buttonStyle = {
-    color: 'white',
-    backgroundColor: 'darkgreen',
-    '&:hover': { backgroundColor: 'green' }
-  };
+
 
   return (
-    <div className='content-container'>
-      <div className='content'>
+    <>
+      <Header 
+        openModal={openModal} 
+      />
 
-        {/* HEADER */}
-        <Box width="550px" display="flex" alignItems="center" justifyContent="center" padding={2}>
+      <InstructionsModal isOpen={isInstructionsModalOpen} onClose={closeModal} />
 
-          <img 
-            src={IconGolfer2} 
-            alt="golfer_icon"
-            style={{ height: '70px', filter: 'invert(1)' }} 
+
+      <Dashboard 
+        handleVideoUpload={handleVideoUpload}
+        setVideoSourceURL={setVideoSourceURL}
+        videoSourceURL={videoSourceURL}
+        poseData={poseData}
+        poseStats={poseStats}
+        videoHidden={videoHidden}
+        hideVideo={hideVideo}
+        colourEnabled={colourEnabled}
+        enableColour={enableColour}
+      />
+
+      {/* <Pose/> */}
+      <Box sx={{ 
+          position: 'relative',
+          maxWidth: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+      }}>
+        {/* Video display */}
+        {videoSourceURL && (
+          <video
+            src={videoSourceURL}
+            ref={videoRef}
+            controls
+            muted
+            onLoadedMetadata={getVideoMetadata}
+            onTimeUpdate={captureFrame}
+            style={{
+              zIndex: 1,
+              position: 'absolute',
+              height: '60vh',
+              maxWidth: '100vh',
+              overflowX: 'hidden',
+            }}
+          ></video>
+        )}
+
+        {/* Pose estimation drawing */}
+        {poseFrame && (
+          <img className="pose"
+            src={poseFrame} alt="Pose Frame" 
+            // style={{width:videoWidth , height:videoHeight}}
           />
+        )}
 
-          <Typography variant="h2">SwingSync</Typography>
-          
-          <Tooltip title="Help">
-            <IconButton onClick={openModal} style={{ marginLeft: '10px' }}>
-              <HelpOutline style={{ backgroundColor: '#e2dfdb', fontSize: 30, borderRadius: '50%' }} />
-            </IconButton>
-          </Tooltip>
-          
-        </Box>
+        {videoHidden && (
+          <Box 
+            sx={{
+              zIndex: 2, 
+              backgroundColor: 'black',
+              position: 'absolute',
+              width: '101%',
+              height: '85%',
+              overflowX: 'hidden',
+              pointerEvents: 'none', 
+            }}
+          ></Box>
+        )}
 
-        {/* DASHBOARD */}
-        <Box
-          sx={{
-            background: 'rgba(255, 255, 255, 0.3)', // Frosted glass effect
-            backdropFilter: 'blur(1px)', // Blur effect
-            borderRadius: '10px', 
-            padding: '20px',
-            display: 'flex',
-            flexDirection: 'column', 
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-          }}
-        >
-          <InstructionsModal isOpen={isModalOpen} onClose={closeModal} />
+      </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <input
-              type="file"
-              accept="video/*"
-              onChange={handleVideoUpload}
-              style={{ display: 'none' }}
-              id="video-upload"
-            />
-            <label htmlFor="video-upload">
-              <Button variant="contained" component="span" sx={buttonStyle}>
-                Upload Video
-              </Button>
-            </label>
-
-            <Button 
-              onClick={() => setVideoSourceURL('/sample_tiger.mp4')} 
-              sx={buttonStyle}
-            >
-              Use Sample Video
-            </Button>
-          </Box>
-
-          <Box sx={{ height: '10px' }}></Box>
-
-
-          {videoSourceURL &&  
-            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Typography variant="body">Options:&nbsp; </Typography>
-              <Button 
-                onClick={hideVideo}
-                sx={buttonStyle}
-              >
-                {!videoHidden ? 'Hide Video' : 'Show Video'}
-              </Button>
-              <Box sx={{ width: '10px' }}></Box>
-              <Button 
-                onClick={enableColour}
-                sx={buttonStyle}
-              >
-                {!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
-              </Button>
-            </Box>
-          }
-
-          {videoSourceURL && poseData && poseStats &&  
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexWrap: 'wrap', 
-                maxWidth: '500px',
-              }}
-            >
-              <Typography variant="body">Stats: </Typography>
-
-              {Object.entries(poseStats).map(([key, value]) => (
-                <Box key={key} sx={{ display: 'flex', alignItems: 'center', margin: '4px 10px 0 10px' }}>
-                  <Typography variant="caption">
-                    {key}:&nbsp;
-                  </Typography>
-                  <Typography variant="caption" sx={{ fontSize: 20, fontWeight: 'bold', color: 'red' }}>
-                    {value}
-                  </Typography>
-                </Box>
-              ))}
-
-            </Box>
-          }
-        </Box>
-
-        {/* <Pose/> */}
-        <Box sx={{ 
-            position: 'relative',
-            maxWidth: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            marginLeft: '40px'
-        }}>
-          {/* Video display */}
-          {videoSourceURL && (
-            <video
-              src={videoSourceURL}
-              ref={videoRef}
-              controls
-              muted
-              onLoadedMetadata={getVideoMetadata}
-              onTimeUpdate={captureFrame}
-              style={{
-                zIndex: 1,
-                position: 'absolute',
-                height: '60vh',
-                maxWidth: '100vh',
-                overflowX: 'hidden',
-              }}
-            ></video>
-          )}
-
-          {/* Pose estimation drawing */}
-          {poseFrame && (
-            <img className="pose"
-              src={poseFrame} alt="Pose Frame" 
-              // style={{width:videoWidth , height:videoHeight}}
-            />
-          )}
-
-          {videoHidden && (
-            <Box 
-              sx={{
-                zIndex: 2, 
-                backgroundColor: 'black',
-                position: 'absolute',
-                width: '100%',
-                maxWidth: '100vh',
-                height: '85%',
-                overflowX: 'hidden',
-                pointerEvents: 'none', 
-              }}
-            ></Box>
-          )}
-
-        </Box>
-
-      </div>
-    </div>
+    </>
   );
 }
 
