@@ -15,7 +15,7 @@ const InstructionsModal = ({ isOpen, onClose }) => {
         sx={{
           width: { xs: '90vw', sm: '80vw', md: '60vw' },
           maxWidth: '600px',
-          bgcolor: 'background.paper',
+          bgcolor: '#0c2830',
           borderRadius: '8px',
           p: 3,
           boxShadow: 24,
@@ -29,7 +29,7 @@ const InstructionsModal = ({ isOpen, onClose }) => {
             top: 8,
             right: 8,
             color: 'text.primary',
-            backgroundColor: 'background.paper',
+            backgroundColor: '#0c2830',
             '&:hover': {
               backgroundColor: 'action.hover'
             }
@@ -44,10 +44,9 @@ const InstructionsModal = ({ isOpen, onClose }) => {
         <Box id="modal-description" sx={{ mt: 2 }}>
           <ol>
             <li>Upload a video of your golf swing</li>
-            <li>Wait 3-5 seconds for the model to load</li>
-            <li>Play the video and the model will automatically start</li>
+            <li>Wait 5 seconds for the model to load</li>
+            <li>Click play on the video and the model will automatically start drawing</li>
             <li>Use the in-video control bar to navigate through your video and adjust playback speed</li>
-            <li>Optional: toggle menu options as needed</li>
           </ol>
         </Box>
       </Box>

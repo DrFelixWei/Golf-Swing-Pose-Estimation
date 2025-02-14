@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Box, Typography, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, Typography, IconButton, Tooltip } from '@mui/material';
 import { HelpOutline } from '@mui/icons-material';
 // import Pose from './Pose';
 import InstructionsModal from './InstructionsModal';
@@ -7,8 +7,6 @@ import { readyTf, drawPose, calculateStats } from './PoseEstimation';
 import IconGolfer2 from './Icon_Golfer2.png';
 
 function Main() {
-
-
   // Handle user uploading video source
   const [videoSourceURL, setVideoSourceURL] = useState(null);
   function handleVideoUpload(event) {
@@ -81,10 +79,10 @@ function Main() {
     // Set pose estimation in progress variable to true
     poseInProgress.current = true;
 
-  // Draw and update variable to hold current frame with pose estimation drawn on
-  const result = await drawPose(detector.current, currentFrame.current, 
-    videoWidth.current, videoHeight.current, 
-    colourEnabled);
+    // Draw and update variable to hold current frame with pose estimation drawn on
+    const result = await drawPose(detector.current, currentFrame.current, 
+      videoWidth.current, videoHeight.current, 
+      colourEnabled);
 
     if (result) { 
       const { pose, poseImage } = result
@@ -124,10 +122,19 @@ function Main() {
     setIsModalOpen(false);
   };
 
+  const buttonStyle = {
+    color: 'white',
+    backgroundColor: 'darkgreen',
+    '&:hover': { backgroundColor: 'green' }
+  };
+
   return (
     <div className='content-container'>
       <div className='content'>
-        <Box width="550px" display="flex" alignItems="center" justifyContent="space-between" padding={2}>
+
+        {/* HEADER */}
+        <Box width="550px" display="flex" alignItems="center" justifyContent="center" padding={2}>
+
           <img 
             src={IconGolfer2} 
             alt="golfer_icon"
@@ -137,12 +144,12 @@ function Main() {
           <Typography variant="h2">SwingSync</Typography>
           
           <Tooltip title="Help">
-            <IconButton onClick={openModal}>
-              <HelpOutline style={{ backgroundColor: '#e2dfdb', borderRadius: '50%' }} />
+            <IconButton onClick={openModal} style={{ marginLeft: '10px' }}>
+              <HelpOutline style={{ backgroundColor: '#e2dfdb', fontSize: 30, borderRadius: '50%' }} />
             </IconButton>
           </Tooltip>
+          
         </Box>
-
 
         {/* DASHBOARD */}
         <Box
@@ -159,24 +166,47 @@ function Main() {
         >
           <InstructionsModal isOpen={isModalOpen} onClose={closeModal} />
 
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <input
+              type="file"
+              accept="video/*"
+              onChange={handleVideoUpload}
+              style={{ display: 'none' }}
+              id="video-upload"
+            />
+            <label htmlFor="video-upload">
+              <Button variant="contained" component="span" sx={buttonStyle}>
+                Upload Video
+              </Button>
+            </label>
 
-          <Typography variant="body">Upload Video:&nbsp; </Typography>
-          <input className="button_uploadVideo"
-            type="file" accept="video/*" onChange={handleVideoUpload} 
-          />
+            <Button 
+              onClick={() => setVideoSourceURL('/sample_tiger.mp4')} 
+              sx={buttonStyle}
+            >
+              Use Sample Video
+            </Button>
           </Box>
+
+          <Box sx={{ height: '10px' }}></Box>
 
 
           {videoSourceURL &&  
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Typography variant="body">Options:&nbsp; </Typography>
-              <button 
-                onClick={hideVideo}>{!videoHidden ? 'Hide Video' : 'Show Video'}
-              </button>
-              <button 
-                onClick={enableColour}>{!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
-              </button>
+              <Button 
+                onClick={hideVideo}
+                sx={buttonStyle}
+              >
+                {!videoHidden ? 'Hide Video' : 'Show Video'}
+              </Button>
+              <Box sx={{ width: '10px' }}></Box>
+              <Button 
+                onClick={enableColour}
+                sx={buttonStyle}
+              >
+                {!colourEnabled ? 'Enable Coloured Limbs' : 'Disable Coloured Limbs'}
+              </Button>
             </Box>
           }
 
@@ -197,10 +227,9 @@ function Main() {
                   <Typography variant="caption">
                     {key}:&nbsp;
                   </Typography>
-                  <Typography variant="caption" sx={{ color: 'red' }}>
+                  <Typography variant="caption" sx={{ fontSize: 20, fontWeight: 'bold', color: 'red' }}>
                     {value}
                   </Typography>
-                  
                 </Box>
               ))}
 
